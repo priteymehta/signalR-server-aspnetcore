@@ -10,8 +10,8 @@ namespace SignalR.Sample.ServerV1.Hubs
     {
         public async Task SendMessageToAllClients(string message)
         {
-            //string clientConnectionId = Context.ConnectionId;
-            await Clients.All.SendAsync("newMessage", "Message from Server", message);
+            string callerConnectionId = Context.ConnectionId;
+            await Clients.AllExcept(callerConnectionId).SendAsync("newMessage", "Message from Server", message);
         }
 
         public string GetClientConnectionId()
